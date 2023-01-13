@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: Product upload
+  contact: {}
+host: image-uploader-0ri0.onrender.com
+basePath: /api/v1
+securityDefinitions: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /products:
+    get:
+      summary: Get all products
+      tags:
+        - Products
+      operationId: Getallproducts
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+  /products/uploads:
+    post:
+      summary: Upload product
+      tags:
+        - Products
+      operationId: Uploadproduct
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: image
+          in: formData
+          required: true
+          type: file
+          format: file
+          description: ""
+        - name: name
+          in: formData
+          required: true
+          type: string
+          description: ""
+        - name: price
+          in: formData
+          required: true
+          type: integer
+          format: int32
+          description: ""
+      responses:
+        "200":
+          description: ""
+          headers: {}
+tags:
+  - name: Products
+    description: ""

@@ -3,7 +3,6 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 const productsRoute = require("./routes/productRoutes");
-
 const fileUpload = require("express-fileupload");
 
 const cloudinary = require("cloudinary").v2;
@@ -12,6 +11,9 @@ cloudinary.config({
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swaggerapi.yaml");
 // database
 const connectDB = require("./db/connect");
 
@@ -26,8 +28,9 @@ app.use(
 );
 app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("<h1>File Upload Starter</h1>");
+  res.send("<h1>File Upload Starter</h1><a href='/api-docs'>Documentation</a>");
 });
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/v1/products", productsRoute);
 
 // middleware
